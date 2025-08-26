@@ -1,0 +1,16 @@
+// {
+//   "compilerOptions": {
+//     "paths": {
+//       "@/*": ["./*"],
+//       "contentlayer/generated": ["./.contentlayer/generated"],
+//     }
+//   }
+// }
+{
+  "compilerOptions": {
+    "baseUrl": ".",
+    "paths": {
+      "@/*": ["./*"]
+    }
+  }
+}
