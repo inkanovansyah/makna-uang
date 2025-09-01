@@ -25,18 +25,18 @@ function useFormattedDate(dateString) {
 }
 
 const BlogLayoutThree = ({ blog }) => {
+  const dateText = useFormattedDate(blog.publishedAt);
   if (!blog) return null; // ✅ perbaikan, bukan `blogs`
 
-  const dateText = useFormattedDate(blog.publishedAt);
 
   return (
     <div className="group flex flex-col items-center text-dark dark:text-light">
       <Link href={blog.slug ? `/blogs/${blog.slug}` : "#"} className="h-full rounded-xl overflow-hidden">
         <Image
-          src={blog.image || "/placeholder.png"}
-          alt={blog.title || "Untitled"}
-          width={blog.image?.width || 400}
-          height={blog.image?.height || 300}
+          src={blog.image }
+          alt={blog.title }
+          width={400}
+          height={300}
           className="aspect-[4/3] w-full h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
           sizes="(max-width: 640px) 100vw, (max-width: 1024px) 50vw, 33vw"
         />
