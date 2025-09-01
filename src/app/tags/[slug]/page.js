@@ -1,28 +1,35 @@
 "use client";
 
-import React, { use } from "react";  // ✅ import use dari React
+import React, { use } from "react";  
 import { usePosts, usePostsByTag } from "../../../components/Hooks/usePosts";
 import BlogLayoutThree from "@/src/components/Blog/BlogLayoutThree";
 import Categories from "@/src/components/Blog/Categories";
 import { slug } from "github-slugger";
 
 const TagsPage = ({ params }) => {
-  const { slug: currentSlug } = use(params); // ✅ Unwrap Promise params
+  const { slug: currentSlug } = use(params); 
 
-  // ✅ Ambil semua posts
+  // Ambil semua posts
   const { data: allPosts, isLoading: loadingAll } = usePosts();
 
-  // ✅ Ambil posts berdasarkan tag / all
+  // Ambil posts berdasarkan tag (selalu panggil, meski nanti ga dipake)
   const {
     data: tagPosts,
     isLoading: loadingTag,
     error,
-  } = currentSlug === "all" ? usePosts() : usePostsByTag(currentSlug);
+  } = usePostsByTag(currentSlug);
 
-  if (loadingAll || loadingTag) return <p className="px-5">Loading...</p>;
-  if (error) return <p className="px-5 text-red-500">Error: {error.message}</p>;
+  // Loading state
+  if (loadingAll || (currentSlug !== "all" && loadingTag)) {
+    return <p className="px-5">Loading...</p>;
+  }
 
-  // ✅ Generate list tags dari semua posts
+  // Error state (hanya kalau bukan "all")
+  if (currentSlug !== "all" && error) {
+    return <p className="px-5 text-red-500">Error: {error.message}</p>;
+  }
+
+  // Generate list tags dari semua posts
   const allTags = ["all"];
   allPosts?.forEach((post) => {
     post.tags.forEach((tag) => {
@@ -32,7 +39,7 @@ const TagsPage = ({ params }) => {
   });
   allTags.sort();
 
-  // ✅ Posts yang akan ditampilkan
+  // Pilih posts yang akan ditampilkan
   const blogs = currentSlug === "all" ? allPosts : tagPosts;
 
   return (
