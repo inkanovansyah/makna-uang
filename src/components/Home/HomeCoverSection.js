@@ -94,7 +94,7 @@ const HomeCoverSection = () => {
         {/* 🖼️ Image / fallback */}
         {blog?.image ? (
           <Image
-            src={blog.image}
+            src={blog.image || "No"}
             alt={blog.title || "No title"}
             fill
             className="w-full h-full object-center object-cover rounded-3xl -z-10"
