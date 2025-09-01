@@ -15,6 +15,10 @@ async function apiClient(endpoint) {
     }
 
     const data = await res.json();
+     // jika data kosong, throw error agar React Query bisa tangani
+    if (!data || Object.keys(data).length === 0) {
+      throw new Error("Data tidak ditemukan");
+    }
     return data;
   } catch (error) {
     console.error("Error fetching data:", error);
@@ -24,5 +28,7 @@ async function apiClient(endpoint) {
 
 export const fetchPosts = () => apiClient("myapi/v1/posts");
 export const fetchTrendingPosts = () => apiClient("myapi/v1/trending");
-// export const fetchPostBySlug = (slug) => apiClient(`myapi/v1/posts/${slug}`);
+export const fetchPostBySlug = (slug) => apiClient(`myapi/v1/detail/${slug}`);
+export const fetchPostsByTag = (tagSlug) => apiClient(`myapi/v1/posts-by-tag/${tagSlug}`);
+
 // export const fetchPostsByCategory = (category) => apiClient(`myapi/v1/posts?category=${category}`);

@@ -14,30 +14,49 @@ const RecentPosts = () => {
   if (isError) return <p>Error: {error.message}</p>;
   if (!blogs || blogs.length === 0) return <p>No posts available</p>;
 
-  const sortedBlogs = sortBlogs(blogs);
-
+  const recentBlogs = blogs.slice(1); 
   return (
     <section className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 sxl:px-32 flex flex-col items-center justify-center">
       <div className="w-full flex justify-between">
         <h2 className="w-fit inline-block font-bold capitalize text-2xl md:text-4xl text-dark dark:text-light">
-          Recent Posts
+          New Posts
         </h2>
         <Link
-          href="/categories/all"
+          href="/tags/all"
           className="inline-block font-medium text-accent dark:text-accentDark underline underline-offset-2 text-base md:text-lg"
         >
           view all
         </Link>
       </div>
 
-      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-16 mt-16">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-16 mt-16">
         
-        {sortedBlogs.map((blog, index) => (
+        {recentBlogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
-            <BlogLayoutThree blog={blog} />
+            <BlogLayoutThree  blog={blog} />
           </article>
         ))}
       </div>
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 mb-6">
+  {/* Banner 1 */}
+  <a href="https://thelazy.media/wp-content/uploads/2025/07/Chainsaw-Kats-2.jpg" className="block w-full">
+    <img
+      src="https://thelazy.media/wp-content/uploads/2025/07/The-Lazy-Titip.png"
+      alt="Banner 1"
+      className="w-full h-auto rounded-lg"
+    />
+  </a>
+
+  {/* Banner 2 */}
+  <a href="https://thelazy.media/wp-content/uploads/2025/07/The-Lazy-Titip.png" className="block w-full">
+    <img
+      src="https://thelazy.media/wp-content/uploads/2025/07/Chainsaw-Kats-2.jpg"
+      alt="Banner 2"
+      className="w-full h-auto rounded-lg"
+    />
+  </a>
+</div>
+
     </section>
   );
 };

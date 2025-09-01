@@ -59,9 +59,9 @@ export default function RootLayout({ children }) {
     <html lang="en">
       <body
         className={cx(
-          inter.variable,
-          manrope.variable,
-          "font-mr bg-light dark:bg-dark"
+          inter.className,
+          manrope.className,
+          "font-mr bg-light dark:bg-dark text-dark dark:text-light"
         )}
       >
         <Script id="theme-switcher" strategy="beforeInteractive">

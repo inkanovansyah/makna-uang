@@ -1,5 +1,5 @@
 import { useQuery } from '@tanstack/react-query';
-import { fetchPosts,  } from '../../utils/api';
+import { fetchPosts,  fetchPostBySlug, fetchPostsByTag } from '../../utils/api';
 
 // Hook untuk semua posts
 export const usePosts = () => {
@@ -24,12 +24,23 @@ export const useTrendingPosts = () => {
   });
 };
 
-// // Hook untuk posts by category
-// export const usePostsByCategory = (category) => {
-//   return useQuery({
-//     queryKey: ['posts', category],
-//     queryFn: () => fetchPostsByCategory(category),
-//     enabled: !!category, // Hanya fetch jika category ada
-//     staleTime: 5 * 60 * 1000,
-//   });
-// };
+// Detail post by slug
+export const usePostBySlug = (slug) => {
+  return useQuery({
+    queryKey: ['post', slug],
+    queryFn: () => fetchPostBySlug(slug),
+    enabled: !!slug, // hanya fetch kalau slug ada
+        retry: false,    // biar gak looping kalau gagal
+    staleTime: 5 * 60 * 1000,
+  });
+};
+
+// ✅ Posts by Tag
+export const usePostsByTag = (tagSlug) => {
+  return useQuery({
+    queryKey: ["posts-by-tag", tagSlug],
+    queryFn: () => fetchPostsByTag(tagSlug),
+    enabled: !!tagSlug, // hanya jalan kalau ada tag
+    staleTime: 5 * 60 * 1000,
+  });
+};
