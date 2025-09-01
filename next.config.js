@@ -5,7 +5,7 @@ module.exports = {
       removeConsole: process.env.NODE_ENV === 'production' ? true : false,
     },
       images: {
-    domains: ['localhost'], // tambahkan domain eksternal yang kamu pakai
+    domains: ['api.maknauang.com'], // tambahkan domain eksternal yang kamu pakai
   },
     webpack: config => {
       config.plugins.push(new VeliteWebpackPlugin())
