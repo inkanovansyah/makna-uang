@@ -52,6 +52,9 @@ export const metadata = {
     title: siteMetadata.title,
     images: [siteMetadata.socialBanner],
   },
+   other: {
+    "fb:app_id": process.env.NEXT_PUBLIC_FB_APP_ID || "2917496495115818", // ✅ di semua halaman
+  },
 };
 
 export default function RootLayout({ children }) {

@@ -46,6 +46,9 @@ export async function generateMetadata({ params }) {
       description: blog.seo?.description || "",
       images: [blog.image],
     },
+    other: {
+    "fb:app_id": process.env.NEXT_PUBLIC_FB_APP_ID || "2917496495115818", // ✅ di semua halaman
+  },
   };
 }
 
