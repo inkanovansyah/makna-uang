@@ -1,20 +1,20 @@
 // please update required information
 const siteMetadata = {
-    title: 'MAKNAUANG -',
+    title: 'MAKNAUANG - Dari Pergolakan Dunia Menuju Stabilitas Finansial',
     author: 'inka novansyah',
-    headerTitle: 'MAKNAUANG -',
+    headerTitle: 'MAKNAUANG -Dari Pergolakan Dunia Menuju Stabilitas Finansial',
     description: 'A blog created with Next.js, Tailwind.css and contentlayer.',
     language: 'en-us',
     theme: 'system', // system, dark or light
     siteUrl: 'https://maknauang.com/', // your website URL
-    siteLogo: '/logo.png',
+    siteLogo: '/social-banner.png',
     socialBanner: '/social-banner.png', // add social banner in the public folder
-    email: 'codebucks27@gmail.com', 
-    github: 'https://github.com/codebucks27',
-    twitter: 'https://twitter.com/code_bucks',
+    email: '@gmail.com', 
+    github: 'https://github.com',
+    twitter: 'https://twitter.com/',
     facebook: 'https://facebook.com',
-    youtube: 'https://youtube.com/codebucks',
-    linkedin: 'https://www.linkedin.com/in/codebucks/',
+    youtube: 'https://youtube.com',
+    linkedin: 'https://www.linkedin.com',
     dribbble: 'https://www.dribbble.com',
     locale: 'en-US',
   }

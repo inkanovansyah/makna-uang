@@ -91,8 +91,8 @@ const Footer = () => {
         </Link> */}
         <div className="text-center">
           Made with &hearts; by{" "}
-          <a href="https://devdreaming.com" className="underline" target="_blank">
-            Inka Novansyah
+          <a href="https://malesgerak.my.id/" className="underline" target="_blank">
+            MalesGerak
           </a>
         </div>
       </div>

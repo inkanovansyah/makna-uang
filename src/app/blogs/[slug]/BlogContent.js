@@ -1,17 +1,25 @@
-"use client";
-
-import { usePostBySlug } from "@/src/components/Hooks/usePosts";
+// app/blogs/[slug]/page.js
+import { notFound } from "next/navigation";
+import Image from "next/image";
 import BlogDetails from "@/src/components/Blog/BlogDetails";
 import Tag from "@/src/components/Elements/Tag";
-import Image from "next/image";
 import { slug as slugify } from "github-slugger";
-import { notFound } from "next/navigation";
 
-export default function BlogContent({ slug }) {
-  const { data: blog, isLoading, isError } = usePostBySlug(slug);
+// Ambil data blog by slug dari API
+async function getBlog(slug) {
+  const res = await fetch(`${process.env.NEXT_PUBLIC_API_URL}/posts/${slug}`, {
+    cache: "no-store",
+  });
+  if (!res.ok) return null;
+  return res.json();
+}
 
-  if (isLoading) return <p className="text-center">Loading...</p>;
-  if (isError || !blog) return notFound();
+export default async function BlogContent({ params }) {
+  // ✅ Ambil slug dari params
+  const { slug } = params;
+
+  const blog = await getBlog(slug);
+  if (!blog) return notFound();
 
   return (
     <article>
@@ -46,7 +54,7 @@ export default function BlogContent({ slug }) {
       {/* Detail + Content */}
       <BlogDetails blog={blog} slug={slug} />
 
-      {/* Render konten HTML dari WordPress */}
+      {/* Render konten HTML */}
       <div className="mt-8 px-5 md:px-10 prose dark:prose-invert max-w-none">
         <div dangerouslySetInnerHTML={{ __html: blog.content }} />
       </div>

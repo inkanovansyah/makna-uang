@@ -19,7 +19,7 @@ const RecentPosts = () => {
     <section className="w-full mt-16 sm:mt-24 md:mt-32 px-5 sm:px-10 md:px-24 sxl:px-32 flex flex-col items-center justify-center">
       <div className="w-full flex justify-between">
         <h2 className="w-fit inline-block font-bold capitalize text-2xl md:text-4xl text-dark dark:text-light">
-          New Posts
+          Fresh Updates
         </h2>
         <Link
           href="/tags/all"
@@ -29,7 +29,7 @@ const RecentPosts = () => {
         </Link>
       </div>
 
-      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-16 mt-16">
+      <div className="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-4 gap-4 mt-16">
         
         {recentBlogs.map((blog, index) => (
           <article key={index} className="col-span-1 row-span-1 relative">
@@ -37,20 +37,20 @@ const RecentPosts = () => {
           </article>
         ))}
       </div>
-      <div className="grid grid-cols-1 sm:grid-cols-2 gap-4 mt-6 mb-6">
+      <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-6 mb-6">
   {/* Banner 1 */}
-  <a href="https://thelazy.media/wp-content/uploads/2025/07/Chainsaw-Kats-2.jpg" className="block w-full">
+  <a href="https://www.magecine.com/wp-content/uploads/2025/03/baner-1-1-1.png" className="block w-full">
     <img
-      src="https://thelazy.media/wp-content/uploads/2025/07/The-Lazy-Titip.png"
+      src="https://www.magecine.com/wp-content/uploads/2025/03/baner-1-1-1.png"
       alt="Banner 1"
       className="w-full h-auto rounded-lg"
     />
   </a>
 
   {/* Banner 2 */}
-  <a href="https://thelazy.media/wp-content/uploads/2025/07/The-Lazy-Titip.png" className="block w-full">
+  <a href="https://www.magecine.com/wp-content/uploads/2025/03/baner-1-1-1.png" className="block w-full">
     <img
-      src="https://thelazy.media/wp-content/uploads/2025/07/Chainsaw-Kats-2.jpg"
+      src="https://www.magecine.com/wp-content/uploads/2025/03/baner-1-1-1.png"
       alt="Banner 2"
       className="w-full h-auto rounded-lg"
     />

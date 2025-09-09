@@ -1,31 +1,40 @@
+// app/blogs/[slug]/page.js
 import { notFound } from "next/navigation";
-import BlogContent from "./BlogContent"; // langsung import Client Component
+import Image from "next/image";
+import BlogDetails from "@/src/components/Blog/BlogDetails";
+import Tag from "@/src/components/Elements/Tag";
+import { slug as slugify } from "github-slugger";
 
-// --- Fetch Server Side untuk SEO ---
+// --- Fetch SSR ---
 async function getPostBySlug(slug) {
-  const res = await fetch(`${process.env.NEXT_PUBLIC_WP_API}/myapi/v1/detail/${slug}`, {
-    next: { revalidate: 60 }, // cache 1 menit
-  });
+  const res = await fetch(
+    `${process.env.NEXT_PUBLIC_WP_API}/myapi/v1/detail/${slug}`,
+    { cache: "no-store" } // selalu fresh, ubah ke { next: { revalidate: 60 } } kalau mau ISR
+  );
 
   if (!res.ok) return null;
   return res.json();
 }
 
-// --- Generate Metadata SEO ---
+// --- Generate Metadata SSR ---
 export async function generateMetadata({ params }) {
-  // Pastikan params di-resolve
-  const resolvedParams = await params; // <-- ini kuncinya
-  const blog = await getPostBySlug(resolvedParams.slug);
+  const blog = await getPostBySlug(params.slug);
 
   if (!blog) return { title: "Not Found" };
+
+  const siteUrl = "https://maknauang.com"; // domain utama kamu
+  const canonicalUrl = `${siteUrl}/blogs/${params.slug}`;
 
   return {
     title: blog.seo?.title || blog.title,
     description: blog.seo?.description || "",
+    alternates: {
+      canonical: canonicalUrl, // ✅ tambahkan ini
+    },
     openGraph: {
       title: blog.seo?.title || blog.title,
       description: blog.seo?.description || "",
-      url: blog.url,
+      url: canonicalUrl,
       type: "article",
       publishedTime: blog.publishedAt,
       modifiedTime: blog.modifiedAt,
@@ -40,13 +49,13 @@ export async function generateMetadata({ params }) {
   };
 }
 
-
-// --- Halaman Blog ---
+// --- Halaman Blog SSR ---
 export default async function BlogPage({ params }) {
   const blog = await getPostBySlug(params.slug);
   if (!blog) return notFound();
-
-  // --- JSON-LD Schema ---
+  const siteUrl = "https://maknauang.com"; // domain utama kamu
+  const canonicalUrl = `${siteUrl}/blogs/${params.slug}`;
+  // ✅ JSON-LD Schema (SEO)
   const jsonLd = {
     "@context": "https://schema.org",
     "@type": "NewsArticle",
@@ -59,24 +68,57 @@ export default async function BlogPage({ params }) {
     author: {
       "@type": "Person",
       name: blog?.author || "Admin",
-      url: blog.url,
+      url: canonicalUrl,
     },
     mainEntityOfPage: {
       "@type": "WebPage",
-      "@id": blog.seo?.canonical || blog.url,
+      "@id": canonicalUrl,
     },
   };
 
   return (
-    <>
-      {/* ✅ JSON-LD server side */}
+    <article>
+      {/* ✅ JSON-LD langsung server-side */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
       />
 
-      {/* ✅ Artikel tetap render via Client Component */}
-      <BlogContent slug={params.slug} />
-    </>
+      {/* Hero Section */}
+      <div className="mb-8 text-center relative w-full h-[70vh] bg-dark">
+        <div className="w-full z-10 flex flex-col items-center justify-center absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+          {blog.tags?.length > 0 && (
+            <Tag
+              name={blog.tags[0]}
+              link={`/tags/${slugify(blog.tags[0])}`}
+              className="px-6 text-sm py-2"
+            />
+          )}
+          <h1 className="mt-6 font-semibold capitalize text-light text-2xl md:text-3xl lg:text-5xl w-5/6">
+            {blog.title}
+          </h1>
+        </div>
+        <div className="absolute inset-0 bg-dark/60 dark:bg-dark/40" />
+        {blog.image && (
+          <Image
+            src={blog.image.src || blog.image}
+            alt={blog.title}
+            width={blog.image.width || 1200}
+            height={blog.image.height || 630}
+            className="w-full h-full object-cover object-center"
+            priority
+            sizes="100vw"
+          />
+        )}
+      </div>
+
+      {/* Detail + Content */}
+      <BlogDetails blog={blog} slug={params.slug} />
+
+      {/* Render konten HTML dari WordPress */}
+      <div className="mt-8 px-5 md:px-10 prose dark:prose-invert max-w-none">
+        <div dangerouslySetInnerHTML={{ __html: blog.content }} />
+      </div>
+    </article>
   );
 }
