@@ -58,6 +58,7 @@ export const metadata = {
 };
 
 export default function RootLayout({ children }) {
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID; // ✅ ambil dari .env
   return (
     <html lang="en">
       <body
@@ -74,6 +75,25 @@ export default function RootLayout({ children }) {
             document.documentElement.classList.remove('dark')
           }`}
         </Script>
+        {/* ✅ Google Analytics */}
+        {GA_MEASUREMENT_ID && (
+          <>
+            <Script
+              src={`https://www.googletagmanager.com/gtag/js?id=${GA_MEASUREMENT_ID}`}
+              strategy="afterInteractive"
+            />
+            <Script id="google-analytics" strategy="afterInteractive">
+              {`
+                window.dataLayer = window.dataLayer || [];
+                function gtag(){dataLayer.push(arguments);}
+                gtag('js', new Date());
+                gtag('config', '${GA_MEASUREMENT_ID}', {
+                  page_path: window.location.pathname,
+                });
+              `}
+            </Script>
+          </>
+        )}
         <Header />
         <Providers> {/* ← WRAP CHILDREN DENGAN PROVIDERS */}
           {children}
