@@ -5,7 +5,7 @@ import Header from "@/src/components/Header";
 import Footer from "../components/Footer";
 import siteMetadata from "../utils/siteMetaData";
 import Script from "next/script";
-import Providers from "./providers"; // ← IMPORT PROVIDERS
+import Providers from "./providers";
 
 const inter = Inter({
   subsets: ["latin"],
@@ -23,7 +23,7 @@ export const metadata = {
   metadataBase: new URL(siteMetadata.siteUrl),
   title: {
     template: `%s | ${siteMetadata.title}`,
-    default: siteMetadata.title, // a default is required when creating a template
+    default: siteMetadata.title,
   },
   description: siteMetadata.description,
   openGraph: {
@@ -52,13 +52,14 @@ export const metadata = {
     title: siteMetadata.title,
     images: [siteMetadata.socialBanner],
   },
-   other: {
-    "fb:app_id": process.env.NEXT_PUBLIC_FB_APP_ID || "2917496495115818", // ✅ di semua halaman
+  other: {
+    "fb:app_id": process.env.NEXT_PUBLIC_FB_APP_ID || "2917496495115818",
   },
 };
 
 export default function RootLayout({ children }) {
-  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID; // ✅ ambil dari .env
+  const GA_MEASUREMENT_ID = process.env.NEXT_PUBLIC_GA_ID;
+
   return (
     <html lang="en">
       <body
@@ -68,13 +69,21 @@ export default function RootLayout({ children }) {
           "font-mr bg-light dark:bg-dark text-dark dark:text-light"
         )}
       >
+        {/* ✅ Theme Switcher */}
         <Script id="theme-switcher" strategy="beforeInteractive">
-          {`if (localStorage.getItem('theme') === 'dark' || (!('theme' in localStorage) && window.matchMedia('(prefers-color-scheme: dark)').matches)) {
-            document.documentElement.classList.add('dark')
-          } else {
-            document.documentElement.classList.remove('dark')
-          }`}
+          {`
+            if (
+              localStorage.getItem('theme') === 'dark' ||
+              (!('theme' in localStorage) &&
+                window.matchMedia('(prefers-color-scheme: dark)').matches)
+            ) {
+              document.documentElement.classList.add('dark');
+            } else {
+              document.documentElement.classList.remove('dark');
+            }
+          `}
         </Script>
+
         {/* ✅ Google Analytics */}
         {GA_MEASUREMENT_ID && (
           <>
@@ -87,17 +96,16 @@ export default function RootLayout({ children }) {
                 window.dataLayer = window.dataLayer || [];
                 function gtag(){dataLayer.push(arguments);}
                 gtag('js', new Date());
-                gtag('config', '${GA_MEASUREMENT_ID}', {
+                gtag('config', "${GA_MEASUREMENT_ID}", {
                   page_path: window.location.pathname,
                 });
               `}
             </Script>
           </>
         )}
+
         <Header />
-        <Providers> {/* ← WRAP CHILDREN DENGAN PROVIDERS */}
-          {children}
-        </Providers>
+        <Providers>{children}</Providers>
         <Footer />
       </body>
     </html>

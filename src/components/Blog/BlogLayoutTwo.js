@@ -56,24 +56,26 @@ const BlogLayoutTwo = () => {
 
           return (
             <article
-                key={blog.id || index}
-                className="group grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-12 gap-2 items-center text-dark dark:text-light mb-6"
-              >
+              key={blog.id || index}
+              className="group grid grid-cols-1 lg:grid-cols-12 gap-2 items-start text-dark dark:text-light mb-6"
+            >
+              {/* Image */}
               <Link
                 href={blog.slug ? `/blogs/${blog.slug}` : "#"}
-                className="col-span-1 lg:col-span-4 h-full rounded-xl overflow-hidden"
+                className="col-span-1 lg:col-span-4 w-full h-60 sm:h-64 lg:h-full rounded-xl overflow-hidden"
               >
                 <Image
                   src={imageSrc.startsWith("http") ? imageSrc : "/placeholder.png"}
                   alt={blog.title || "No title"}
                   width={1920}
                   height={1280}
-                  className="aspect-square w-full h-full object-cover object-center group-hover:scale-105 transition-all ease duration-300"
+                  className="w-full h-full object-cover object-center group-hover:scale-105 transition-all duration-300"
                   sizes="(max-width: 640px) 100vw,(max-width: 1024px) 50vw, 33vw"
                 />
               </Link>
 
-              <div className="col-span-1 lg:col-span-8 w-full">
+              {/* Content */}
+              <div className="col-span-1 lg:col-span-8 mt-4 lg:mt-0 w-full flex flex-col justify-start">
                 <span className="inline-block w-full uppercase text-accent dark:text-accentDark font-semibold text-xs sm:text-sm">
                   {blog.tags?.[0] || "No Tag"}
                 </span>
@@ -81,7 +83,7 @@ const BlogLayoutTwo = () => {
                   <h2 className="font-semibold capitalize text-base sm:text-lg">
                     <span
                       className="bg-gradient-to-r from-accent/50 dark:from-accentDark/50 to-accent/50 dark:to-accentDark/50 bg-[length:0px_6px]
-                        group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500 "
+                      group-hover:bg-[length:100%_6px] bg-left-bottom bg-no-repeat transition-[background-size] duration-500"
                     >
                       {blog.title || "Untitled"}
                     </span>

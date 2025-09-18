@@ -85,6 +85,35 @@ const parseContent = (html) => {
   });
 };
 
+// --- Komponen Breadcrumb ---
+function Breadcrumb({ slug, title }) {
+  return (
+    <nav className="text-sm mb-6 px-5 md:px-10" aria-label="Breadcrumb">
+      <ol className="list-reset flex text-gray-600 dark:text-gray-300">
+        <li>
+          <Link href="/" className="hover:underline">
+            Home
+          </Link>
+        </li>
+        <li>
+          <span className="mx-2">/</span>
+        </li>
+        <li>
+          <Link href="/blogs" className="hover:underline">
+            Blogs
+          </Link>
+        </li>
+        <li>
+          <span className="mx-2">/</span>
+        </li>
+        <li className="text-gray-900 dark:text-gray-100 font-medium">
+          {title || slug}
+        </li>
+      </ol>
+    </nav>
+  );
+}
+
 // --- Halaman Blog SSR ---
 export default async function BlogPage({ params }) {
   const blog = await getPostBySlug(params.slug);
@@ -107,12 +136,43 @@ export default async function BlogPage({ params }) {
     mainEntityOfPage: { "@type": "WebPage", "@id": canonicalUrl },
   };
 
+  // JSON-LD Breadcrumb Schema
+  const breadcrumbLd = {
+    "@context": "https://schema.org",
+    "@type": "BreadcrumbList",
+    itemListElement: [
+      {
+        "@type": "ListItem",
+        position: 1,
+        name: "Home",
+        item: "https://maknauang.com/",
+      },
+      {
+        "@type": "ListItem",
+        position: 2,
+        name: "Blogs",
+        item: "https://maknauang.com/blogs",
+      },
+      {
+        "@type": "ListItem",
+        position: 3,
+        name: blog.title,
+        item: canonicalUrl,
+      },
+    ],
+  };
+
   return (
     <article>
-      {/* JSON-LD langsung server-side */}
+      {/* JSON-LD NewsArticle */}
       <script
         type="application/ld+json"
         dangerouslySetInnerHTML={{ __html: JSON.stringify(jsonLd) }}
+      />
+      {/* JSON-LD Breadcrumb */}
+      <script
+        type="application/ld+json"
+        dangerouslySetInnerHTML={{ __html: JSON.stringify(breadcrumbLd) }}
       />
 
       {/* Hero Section */}
@@ -142,6 +202,9 @@ export default async function BlogPage({ params }) {
           />
         )}
       </div>
+
+      {/* Breadcrumb (HTML visual) */}
+      <Breadcrumb slug={params.slug} title={blog.title} />
 
       {/* Detail + Konten */}
       <BlogDetails blog={blog} slug={params.slug} />

@@ -5,9 +5,13 @@ module.exports = {
     compiler: {
       removeConsole: process.env.NODE_ENV === 'production' ? true : false,
     },
-      images: {
-    domains: ['api.maknauang.com'], // tambahkan domain eksternal yang kamu pakai
-  },
+    images: {
+      domains: [
+        'localhost',          // supaya bisa load gambar dari lokal dev
+        'api.maknauang.com',  // domain API / WP JSON live
+        'maknauang.com',      // kalau WordPress live domain utamanya
+      ],
+    },
     webpack: config => {
       config.plugins.push(new VeliteWebpackPlugin())
       return config
