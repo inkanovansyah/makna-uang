@@ -73,7 +73,7 @@ const RecentPosts = () => {
           className="block w-full"
         >
           <img
-            src="https://www.magecine.com/wp-content/uploads/2025/12/Artboard-1.png""
+            src="https://www.magecine.com/wp-content/uploads/2025/12/Artboard-1.png"
             alt="Banner 1"
             className="w-full h-auto rounded-lg"
           />
