@@ -80,11 +80,11 @@ const RecentPosts = () => {
         </a>
 
         <a
-          href="https://www.magecine.com/wp-content/uploads/2025/03/baner-1-1-1.png"
+          href="https://www.magecine.com/wp-content/uploads/2025/12/Artboard-1.png"
           className="block w-full"
         >
           <img
-            src="https://www.magecine.com/wp-content/uploads/2025/03/baner-1-1-1.png"
+            src="https://www.magecine.com/wp-content/uploads/2025/12/Artboard-1.png"
             alt="Banner 2"
             className="w-full h-auto rounded-lg"
           />
