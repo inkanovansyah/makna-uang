@@ -69,18 +69,18 @@ const RecentPosts = () => {
       {/* Banner */}
       <div className="grid grid-cols-1 sm:grid-cols-2 gap-2 mt-6 mb-6">
         <a
-          href="https://www.magecine.com/wp-content/uploads/2025/03/baner-1-1-1.png"
+          href="https://malesgerak.my.id/"
           className="block w-full"
         >
           <img
-            src="https://www.magecine.com/wp-content/uploads/2025/03/baner-1-1-1.png"
+            src="https://www.magecine.com/wp-content/uploads/2025/12/Artboard-1.png""
             alt="Banner 1"
             className="w-full h-auto rounded-lg"
           />
         </a>
 
         <a
-          href="https://www.magecine.com/wp-content/uploads/2025/12/Artboard-1.png"
+          href="https://malesgerak.my.id/"
           className="block w-full"
         >
           <img
